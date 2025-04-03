@@ -5,6 +5,231 @@
   <title>Minecraft Chat Animated Beatles Portfolio</title>
   <style>
     /* Load your Minecraft chat font – replace the URL with your actual hosted font file */
+@font-face {
+  font-family: 'MinecraftChat';
+  src: url('https://example.com/Minecraftia.ttf') format('truetype');
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'MinecraftChat', monospace;
+  background-color: #f8f8f8; /* Off-white background */
+  color: #333;
+  overflow-x: hidden;
+}
+
+.section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  border-bottom: 1px solid #ddd;
+  overflow: hidden;
+}
+
+/* Flex container to split text and image side-by-side */
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+  max-width: 1000px;
+  gap: 2rem;
+  z-index: 2;
+}
+
+.text, .image-container {
+  flex: 1;
+}
+
+.text {
+  font-size: 1.2rem;
+  /* Light subtle background on text */
+  background: rgba(0, 0, 0, 0.02);
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+/* Text Animation */
+.animate-item {
+  opacity: 0;
+  transition: transform 1s ease-out, opacity 1s ease-out;
+}
+
+.from-left {
+  transform: translateX(-100%);
+}
+
+.from-right {
+  transform: translateX(100%);
+}
+
+.animate-item.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Image base styling */
+.image-animate {
+  opacity: 0;
+}
+
+.image-from-left {
+  transform: translateX(-100%);
+}
+
+.image-from-right {
+  transform: translateX(100%);
+}
+
+/* Keyframes for image slide-in with playful wiggle */
+@keyframes slideInLeftWiggle {
+  0% {
+    transform: translateX(-100%) scale(0.8) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    transform: translateX(0) scale(1.1) rotate(5deg);
+    opacity: 1;
+  }
+  70% {
+    transform: translateX(0) scale(0.95) rotate(-3deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRightWiggle {
+  0% {
+    transform: translateX(100%) scale(0.8) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    transform: translateX(0) scale(1.1) rotate(-5deg);
+    opacity: 1;
+  }
+  70% {
+    transform: translateX(0) scale(0.95) rotate(3deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.image-from-left.active {
+  animation: slideInLeftWiggle 1.2s ease-out forwards;
+}
+
+.image-from-right.active {
+  animation: slideInRightWiggle 1.2s ease-out forwards;
+}
+
+/* Bubble & shape animations (subtle, barely-there details) */
+.bubble {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(220, 220, 220, 0.4);
+  animation: floatBubble 5s ease-in-out infinite;
+  z-index: 1;
+}
+
+.bubble.small { width: 25px; height: 25px; }
+.bubble.medium { width: 40px; height: 40px; }
+.bubble.large { width: 60px; height: 60px; }
+
+@keyframes floatBubble {
+  0%   { transform: translateY(0) scale(0.9); opacity: 0.8; }
+  50%  { transform: translateY(-15px) scale(1); opacity: 1; }
+  100% { transform: translateY(0) scale(0.9); opacity: 0.8; }
+}
+
+.image-container img {
+  max-width: 480px;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
+/* Media Queries for Mobile Devices */
+@media (max-width: 768px) {
+  /* Adjust font size for readability */
+  .text {
+    font-size: 1rem;
+  }
+
+  /* Stack content vertically */
+  .content {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  /* Adjust image and text container behavior */
+  .text, .image-container {
+    flex: none;
+    width: 100%;
+  }
+
+  /* Ensure images scale properly */
+  .image-container img {
+    max-width: 100%;
+  }
+
+  /* Reduce padding for better space usage */
+  .section {
+    padding: 1rem;
+  }
+
+  /* Adjust bubble sizes for smaller screens */
+  .bubble.small { width: 15px; height: 15px; }
+  .bubble.medium { width: 25px; height: 25px; }
+  .bubble.large { width: 40px; height: 40px; }
+
+  /* Adjust bubble positions to fit screen */
+  .bubble {
+    transform: scale(0.8);
+  }
+}
+
+/* Additional Media Query for Very Small Screens */
+@media (max-width: 480px) {
+  /* Further reduce font size */
+  .text {
+    font-size: 0.9rem;
+  }
+
+  /* Minimize padding */
+  .section {
+    padding: 0.5rem;
+  }
+
+  /* Further adjust bubble sizes */
+  .bubble.small { width: 10px; height: 10px; }
+  .bubble.medium { width: 20px; height: 20px; }
+  .bubble.large { width: 30px; height: 30px; }
+
+  /* Reduce animation distance for performance */
+  .from-left {
+    transform: translateX(-50%);
+  }
+  .from-right {
+    transform: translateX(50%);
+  }
+  .image-from-left {
+    transform: translateX(-50%);
+  }
+  .image-from-right {
+    transform: translateX(50%);
+  }
+}
+    /* Load your Minecraft chat font – replace the URL with your actual hosted font file */
     @font-face {
       font-family: 'MinecraftChat';
       src: url('https://example.com/Minecraftia.ttf') format('truetype');

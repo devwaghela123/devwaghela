@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portfolio - Choose Your Achievement</title>
+  <style>
+    /* Import your pixelated Minecraft-style font; drop Minecraft.ttf in your folder */
+    @font-face {
+      font-family: 'Minecraft';
+      src: url('Minecraft.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    
+    /* Basic Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; }
+    
+    /* Container with off‑white background */
+    .container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      background-color: #f8f8f0;
+      overflow: hidden;
+      font-family: 'Minecraft', monospace;
+    }
+    
+    /* Left-side text block */
+    .left-text {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #333;
+      font-size: 16px;
+      line-height: 1.4;
+      max-width: 300px;
+    }
+    
+    /* Towers Wrapper: shifted to the right side */
+    .towers-wrapper {
+      position: absolute;
+      top: 50%;
+      right: 20px;
+      transform: translateY(-50%);
+      display: flex;
+      gap: 40px;
+      align-items: flex-end;
+    }
+    
+    /* Each tower container holds the tower and its title */
+    .tower-container {
+      position: relative;
+      text-align: center;
+    }
+    
+    /* Tower titles above towers */
+    .tower-title {
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 18px;
+      color: #333;
+      white-space: nowrap;
+    }
+    
+    /* Tower styles */
+    .tower {
+      width: 191px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .tower:hover {
+      transform: scale(1.02);
+    }
+    
+    /* Plane styling */
+    #plane {
+      position: absolute;
+      width: 250px;  /* Bigger plane */
+      display: none;
+      transition: all 1.5s ease;
+    }
+    
+    /* Hit effect animation */
+    @keyframes hitEffectVertical {
+      0%   { transform: rotate(-90deg) scale(1); }
+      50%  { transform: rotate(-90deg) scale(1.2); }
+      100% { transform: rotate(-90deg) scale(1); }
+    }
+    @keyframes hitEffectHorizontal {
+      0%   { transform: scale(1); }
+      50%  { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+    .hit-vertical {
+      animation: hitEffectVertical 0.3s forwards;
+    }
+    .hit-horizontal {
+      animation: hitEffectHorizontal 0.3s forwards;
+    }
+
+    /* MOBILE RESPONSIVE FIXES: towers at bottom, text top-left */
+@media (max-width: 768px) {
+  /* Keep container full height for plane animations */
+  .container {
+    width: 100vw;
+    height: 100vh; 
+    overflow: hidden; /* Ensures plane anim can happen off-screen */
+  }
+
+  /* Left text pinned at top-left, smaller font */
+  .left-text {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    transform: none;  /* Remove desktop translateY(-50%) */
+    font-size: 14px;
+    max-width: 80%;   /* So text doesn't wrap awkwardly */
+  }
+
+  /* Towers pinned at the bottom center, side by side */
+  .towers-wrapper {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%); /* Center them horizontally */
+    display: flex;
+    flex-direction: row; 
+    gap: 20px; /* Space between towers */
+    align-items: flex-end; /* Keep towers aligned at bottom */
+  }
+
+  /* Scale down the towers */
+  .tower {
+    width: 130px; /* Adjust as needed */
+  }
+
+  /* Keep tower titles just above each tower, maybe smaller text */
+  .tower-title {
+    font-size: 14px;
+    top: -30px; /* Move title a bit closer if needed */
+  }
+
+  /* Scale down plane size so it fits better */
+  #plane {
+    width: 150px; 
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Left-side text block -->
+    <div class="left-text">
+      <p>dev waghela</p>
+      <p>Age: doesnt matter</p>
+      <p>Mumbai📍</p>
+      <p>‎ </p>
+      <p>Make sure ur wearing two socks</p> 
+      <p>because this portfolio gonna blow ur socks off</p>
+      <p>click on the</p>
+      <p>(left tower to know more about me)</p>
+      <p>(right tower to dive into the achievement)</p>
+    </div>
+    
+    <!-- Centralized towers wrapper (shifted right) -->
+    <div class="towers-wrapper">
+      <!-- Creative Tower Container -->
+      <div class="tower-container">
+        <div id="creativeTitle" class="tower-title">Creative Achievements</div>
+        <img id="creativeTower" class="tower" src="tower1.png" alt="Creative Tower" />
+      </div>
+      
+      <!-- Logical Tower Container -->
+      <div class="tower-container">
+        <div id="logicalTitle" class="tower-title">Logical Achievements</div>
+        <img id="logicalTower" class="tower" src="tower2.png" alt="Logical Tower" />
+      </div>
+    </div>
+    
+    <!-- Plane image (hidden until triggered) -->
+    <img id="plane" src="plane.png" alt="Plane" />
+  </div>
+  
+  <script>
+    // Helper: get the center of an element relative to container
+    function getRelativeCenter(element, container) {
+      const elemRect = element.getBoundingClientRect();
+      const contRect = container.getBoundingClientRect();
+      return {
+        centerX: elemRect.left + elemRect.width / 2 - contRect.left,
+        centerY: elemRect.top + elemRect.height / 2 - contRect.top
+      };
+    }
+    
+    // Animation for creative tower (vertical from bottom, rotated -90deg)
+    document.getElementById('creativeTower').addEventListener('click', function() {
+      const container = document.querySelector('.container');
+      const towerCenter = getRelativeCenter(this, container);
+      const plane = document.getElementById('plane');
+      
+      // Reset plane and set rotation for creative: -90deg
+      plane.style.transition = 'none';
+      plane.style.transform = 'rotate(-90deg)';
+      
+      const planeWidth = plane.offsetWidth || 250;
+      const planeHeight = plane.offsetHeight || 250;
+      
+      // Position plane below the viewport, horizontally aligned with tower center
+      plane.style.left = (towerCenter.centerX - planeWidth / 2) + 'px';
+      plane.style.top = container.offsetHeight + 'px';
+      plane.style.display = 'block';
+      
+      // Force reflow to apply changes
+      void plane.offsetWidth;
+      
+      // Animate plane upward to hit a bit higher than tower center (offset by 40px)
+      plane.style.transition = 'top 1.5s ease';
+      plane.style.top = (towerCenter.centerY - planeHeight / 2 - 40) + 'px';
+      
+      // When transition ends, trigger hit effect then redirect
+      plane.addEventListener('transitionend', function handler() {
+        plane.removeEventListener('transitionend', handler);
+        plane.classList.add('hit-vertical');
+        setTimeout(() => {
+          window.location.href = "creative.html";
+        }, 350);
+      });
+    });
+    
+    // Animation for logical tower (horizontal from left, no rotation)
+    document.getElementById('logicalTower').addEventListener('click', function() {
+      const container = document.querySelector('.container');
+      const towerCenter = getRelativeCenter(this, container);
+      const plane = document.getElementById('plane');
+      
+      // Reset plane for logical: no rotation
+      plane.style.transition = 'none';
+      plane.style.transform = 'rotate(0deg)';
+      
+      const planeWidth = plane.offsetWidth || 250;
+      const planeHeight = plane.offsetHeight || 250;
+      
+      // Position plane off-screen to the left, vertically aligned with tower center
+      plane.style.top = (towerCenter.centerY - planeHeight / 2) + 'px';
+      plane.style.left = -planeWidth + 'px';
+      plane.style.display = 'block';
+      
+      void plane.offsetWidth;
+      
+      // Animate plane horizontally to tower center
+      plane.style.transition = 'left 1.5s ease';
+      plane.style.left = (towerCenter.centerX - planeWidth / 2) + 'px';
+      
+      plane.addEventListener('transitionend', function handler() {
+        plane.removeEventListener('transitionend', handler);
+        plane.classList.add('hit-horizontal');
+        setTimeout(() => {
+          window.location.href = "big-ones.html";
+        }, 350);
+      });
+    });
+  </script>
+</body>
+</html>

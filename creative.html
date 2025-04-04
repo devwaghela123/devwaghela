@@ -1,592 +1,357 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>about me bitch</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet" />
-  <style>
-    /* Basic Resets & Global Styles */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    html, body {
-      width: 100%;
-      height: 100%;
-      font-family: 'Bebas Neue', sans-serif;
-      background: #f8f8f8;
-      color: #111;
-      scroll-behavior: smooth;
-      overflow: hidden;
-    }
-    a {
-      color: #111;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dev Waghela - Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    /* Main Wrapper & Slide Layout */
-    .wrapper {
-      width: 100%;
-      height: 300vh;
-      overflow-y: scroll;
-      scroll-snap-type: y mandatory;
-    }
-    .slide {
-      position: relative;
-      width: 100%;
-      height: 100vh;
-      scroll-snap-align: start;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-      overflow: hidden;
-    }
-    .slide-content {
-      width: 80%;
-      max-width: 1000px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      position: relative;
-    }
+        body {
+          font-family: 'Minecraftia', monospace;
+            background: #fafafa; /* Off-white background, Apple-style */
+            color: #1d1d1f; /* Dark gray for text */
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
 
-    /* Headings, Paragraphs, Images */
-    h1, h2, h3, p {
-      margin: 1rem 0;
-    }
-    h1 {
-      font-size: 3rem;
-    }
-    h2 {
-      font-size: 2rem;
-    }
-    h3 {
-      font-size: 1.5rem;
-    }
-    p, ul li {
-      font-size: 1.2rem;
-      line-height: 1.4;
-    }
-    img {
-      max-width: 300px;
-      margin: 1rem;
-      border: 2px solid #111;
-    }
-    
+        /* Main Wrapper & Slide Layout */
+        .wrapper {
+            width: 100%;
+            height: 400vh; /* Adjusted for four sections */
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+        }
 
-    /* "Next" Link */
-    .next-link {
-      position: absolute;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 1.2rem;
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-    }
-    .arrow {
-      margin-left: 6px;
-      font-size: 1.4rem;
-    }
+        .slide {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            scroll-snap-align: start;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            overflow: hidden;
+        }
 
-    /* Animation Infrastructure */
-    .animate-item {
-      opacity: 0;
-      animation-duration: 1.5s;
-      animation-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1.0);
-      animation-fill-mode: forwards;
-      animation-play-state: paused;
-    }
+        .slide-content {
+            width: 90%;
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
 
-    /* Left */
-    .from-left {
-      transform: translateX(-150px) scale(0.9);
-      animation-name: slideInLeft;
-    }
-    @keyframes slideInLeft {
-      0% { transform: translateX(-150px) scale(0.9); opacity: 0; }
-      100% { transform: translateX(0) scale(1); opacity: 1; }
-    }
+        /* Typography */
+        h1, h2, h3 {
+            margin: 1rem 0;
+            font-weight: 600;
+            color: #1d1d1f;
+        }
 
-    /* Right */
-    .from-right {
-      transform: translateX(150px) scale(0.9);
-      animation-name: slideInRight;
-    }
-    @keyframes slideInRight {
-      0% { transform: translateX(150px) scale(0.9); opacity: 0; }
-      100% { transform: translateX(0) scale(1); opacity: 1; }
-    }
+        h1 {
+            font-size: 3.5rem;
+            letter-spacing: -0.02em;
+        }
 
-    /* Top */
-    .from-top {
-      transform: translateY(-150px) scale(0.9);
-      animation-name: slideInTop;
-    }
-    @keyframes slideInTop {
-      0% { transform: translateY(-150px) scale(0.9); opacity: 0; }
-      100% { transform: translateY(0) scale(1); opacity: 1; }
-    }
+        h2 {
+            font-size: 2.5rem;
+            letter-spacing: -0.01em;
+        }
 
-    /* Bottom */
-    .from-bottom {
-      transform: translateY(150px) scale(0.9);
-      animation-name: slideInBottom;
-    }
-    @keyframes slideInBottom {
-      0% { transform: translateY(150px) scale(0.9); opacity: 0; }
-      100% { transform: translateY(0) scale(1); opacity: 1; }
-    }
+        h3 {
+            font-size: 1.8rem;
+        }
 
-    /* Large Variants */
-    .from-top-large {
-      transform: translateY(-200px) scale(0.8);
-      animation-name: slideInTopLarge;
-    }
-    @keyframes slideInTopLarge {
-      0% { transform: translateY(-200px) scale(0.8); opacity: 0; }
-      100% { transform: translateY(0) scale(1); opacity: 1; }
-    }
+        p, ul li {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: #515154; /* Softer gray for secondary text */
+        }
 
-    /* Delay Classes */
-    .delay1 { animation-delay: 0.2s; }
-    .delay2 { animation-delay: 0.4s; }
-    .delay3 { animation-delay: 0.6s; }
-    .delay4 { animation-delay: 0.8s; }
-    .delay5 { animation-delay: 1.0s; }
-    .delay6 { animation-delay: 1.2s; }
-    .delay7 { animation-delay: 1.4s; }
+        a {
+            color: #06c; /* Apple blue for links */
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
 
-    /* Slide-Specific Styles */
-    .text-container {
-      max-width: 50%;
-      text-align: left;
-    }
-    .edu-skills-container {
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-      margin-bottom: 2rem;
-    }
-    .education, .skills {
-      width: 45%;
-    }
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
-      width: 100%;
-    }
-    .project-card {
-      text-align: center;
-    }
-    .project-card img {
-      max-width: 100%;
-      height: auto;
-    }
+        a:hover {
+            color: #003087; /* Darker blue on hover */
+        }
 
-    /* Slide 1 Specific */
-    #slide1 .slide-content {
-      flex-direction: row;
-      justify-content: space-around;
-      align-items: center;
-    }
+        /* Images */
+        img {
+            max-width: 300px;
+            margin: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
 
-    /* Media Queries */
-    @media (max-width: 768px) {
-      h1 { font-size: 2.2rem; }
-      h2 { font-size: 1.6rem; }
-      h3 { font-size: 1.2rem; }
-      p, ul li { font-size: 1rem; }
-      img { max-width: 200px; }
-      .slide-content { width: 90%; }
-      .text-container { max-width: 100%; }
-      #slide1 .slide-content { flex-direction: column; }
-      .edu-skills-container { flex-direction: column; }
-      .education, .skills { width: 100%; }
-      .projects-grid { grid-template-columns: 1fr; }
-    }
+        img:hover {
+            transform: scale(1.05);
+        }
 
+        /* "Next" Link */
+        .next-link {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            color: #515154;
+            transition: color 0.3s ease;
+        }
 
+        .next-link:hover {
+            color: #1d1d1f;
+        }
 
+        .arrow {
+            margin-left: 6px;
+            font-size: 1.4rem;
+            animation: bounce 1.5s infinite;
+        }
 
-    /* Basic Resets & Global Styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-html, body {
-  width: 100%;
-  height: 100%;
-  font-family: 'Bebas Neue', sans-serif;
-  background: #f8f8f8;
-  color: #111;
-  scroll-behavior: smooth;
-  overflow: hidden;
-}
-a {
-  color: #111;
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: underline;
-}
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(5px); }
+            60% { transform: translateY(2px); }
+        }
 
-/* Main Wrapper & Slide Layout */
-.wrapper {
-  width: 100%;
-  height: 300vh;
-  overflow-y: scroll;
-  scroll-snap-type: y mandatory;
-}
-.slide {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  scroll-snap-align: start;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  overflow: hidden;
-}
-.slide-content {
-  width: 80%;
-  max-width: 1000px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  position: relative;
-}
+        /* Animation Infrastructure */
+        .animate-item {
+            opacity: 0;
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
 
-/* Headings, Paragraphs, Images */
-h1, h2, h3, p {
-  margin: 1rem 0;
-}
-h1 {
-  font-size: 3rem;
-}
-h2 {
-  font-size: 2rem;
-}
-h3 {
-  font-size: 1.5rem;
-}
-p, ul li {
-  font-size: 1.2rem;
-  line-height: 1.4;
-}
-img {
-  max-width: 300px;
-  margin: 1rem;
-  border: 2px solid #111;
-}
-.grayscale {
-  filter: grayscale(100%);
-}
+        .from-left {
+            transform: translateX(-50px);
+        }
 
-/* "Next" Link */
-.next-link {
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 1.2rem;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-.arrow {
-  margin-left: 6px;
-  font-size: 1.4rem;
-}
+        .from-right {
+            transform: translateX(50px);
+        }
 
-/* Animation Infrastructure */
-.animate-item {
-  opacity: 0;
-  animation-duration: 1.5s;
-  animation-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1.0);
-  animation-fill-mode: forwards;
-  animation-play-state: paused;
-}
+        .from-top {
+            transform: translateY(-50px);
+        }
 
-/* Animation Keyframes (Left, Right, Top, Bottom, Top-Large) */
-.from-left {
-  transform: translateX(-150px) scale(0.9);
-  animation-name: slideInLeft;
-}
-@keyframes slideInLeft {
-  0% { transform: translateX(-150px) scale(0.9); opacity: 0; }
-  100% { transform: translateX(0) scale(1); opacity: 1; }
-}
-.from-right {
-  transform: translateX(150px) scale(0.9);
-  animation-name: slideInRight;
-}
-@keyframes slideInRight {
-  0% { transform: translateX(150px) scale(0.9); opacity: 0; }
-  100% { transform: translateX(0) scale(1); opacity: 1; }
-}
-.from-top {
-  transform: translateY(-150px) scale(0.9);
-  animation-name: slideInTop;
-}
-@keyframes slideInTop {
-  0% { transform: translateY(-150px) scale(0.9); opacity: 0; }
-  100% { transform: translateY(0) scale(1); opacity: 1; }
-}
-.from-bottom {
-  transform: translateY(150px) scale(0.9);
-  animation-name: slideInBottom;
-}
-@keyframes slideInBottom {
-  0% { transform: translateY(150px) scale(0.9); opacity: 0; }
-  100% { transform: translateY(0) scale(1); opacity: 1; }
-}
-.from-top-large {
-  transform: translateY(-200px) scale(0.8);
-  animation-name: slideInTopLarge;
-}
-@keyframes slideInTopLarge {
-  0% { transform: translateY(-200px) scale(0.8); opacity: 0; }
-  100% { transform: translateY(0) scale(1); opacity: 1; }
-}
+        .from-bottom {
+            transform: translateY(50px);
+        }
 
-/* Delay Classes */
-.delay1 { animation-delay: 0.2s; }
-.delay2 { animation-delay: 0.4s; }
-.delay3 { animation-delay: 0.6s; }
-.delay4 { animation-delay: 0.8s; }
-.delay5 { animation-delay: 1.0s; }
-.delay6 { animation-delay: 1.2s; }
-.delay7 { animation-delay: 1.4s; }
+        .animate-item.visible {
+            opacity: 1;
+            transform: translate(0, 0);
+        }
 
-/* Slide-Specific Styles */
-.text-container {
-  max-width: 50%;
-  text-align: left;
-}
-.edu-skills-container {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  margin-bottom: 2rem;
-}
-.education, .skills {
-  width: 45%;
-}
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-  width: 100%;
-}
-.project-card {
-  text-align: center;
-}
-.project-card img {
-  max-width: 100%;
-  height: auto;
-}
+        /* Slide-Specific Styles */
+        .text-container {
+            max-width: 50%;
+            text-align: left;
+        }
 
-/* Slide 1 Specific */
-#slide1 .slide-content {
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-}
+        .edu-skills-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 2rem;
+        }
 
-/* Media Queries for Mobile Devices */
-@media (max-width: 768px) {
-  /* Adjust font sizes for readability */
-  h1 {
-    font-size: 2.2rem;
-  }
-  h2 {
-    font-size: 1.6rem;
-  }
-  h3 {
-    font-size: 1.2rem;
-  }
-  p, ul li {
-    font-size: 1rem;
-  }
+        .education, .skills {
+            width: 45%;
+        }
 
-  /* Ensure images scale properly */
-  img {
-    max-width: 100%;
-    height: auto;
-  }
+        .skills ul {
+            list-style: none;
+            padding: 0;
+        }
 
-  /* Adjust slide content width */
-  .slide-content {
-    width: 90%;
-  }
+        .skills li {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            background: #f5f5f7; /* Light gray background for skills */
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
 
-  /* Stack elements vertically in slide 1 */
-  #slide1 .slide-content {
-    flex-direction: column;
-  }
+        .skills li:hover {
+            background: #e8e8ed;
+        }
 
-  /* Make text container full width and centered */
-  .text-container {
-    max-width: 100%;
-    text-align: center;
-  }
+        /* Slide 1 Specific */
+        #slide1 .slide-content {
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+        }
 
-  /* Stack education and skills vertically */
-  .edu-skills-container {
-    flex-direction: column;
-  }
-  .education, .skills {
-    width: 100%;
-    margin-bottom: 1rem;
-  }
+        /* Contact Form */
+        .contact-form {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
 
-  /* Adjust projects grid to single column */
-  .projects-grid {
-    grid-template-columns: 1fr;
-  }
+        .contact-form input,
+        .contact-form textarea {
+            padding: 1rem;
+            border: 1px solid #d2d2d7;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: #fff;
+            color: #1d1d1f;
+            transition: border-color 0.3s ease, transform 0.3s ease;
+        }
 
-  /* Ensure "Next" link is visible and accessible */
-  .next-link {
-    font-size: 1rem;
-  }
-  .arrow {
-    font-size: 1.2rem;
-  }
-}
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: #06c;
+            transform: scale(1.02);
+        }
 
-/* Additional Media Query for Very Small Screens */
-@media (max-width: 480px) {
-  /* Further reduce font sizes */
-  h1 {
-    font-size: 1.8rem;
-  }
-  h2 {
-    font-size: 1.4rem;
-  }
-  h3 {
-    font-size: 1rem;
-  }
-  p, ul li {
-    font-size: 0.9rem;
-  }
+        .contact-form textarea {
+            resize: none;
+            height: 150px;
+        }
 
-  /* Adjust slide padding */
-  .slide {
-    padding: 1rem;
-  }
+        .contact-form button {
+            padding: 1rem;
+            background: #06c;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
 
-  /* Further adjust image sizes */
-  img {
-    max-width: 80%;
-  }
-}
-  </style>
+        .contact-form button:hover {
+            background: #003087;
+            transform: scale(1.05);
+        }
+
+        /* Media Queries for Mobile Devices */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            h3 { font-size: 1.5rem; }
+            p, ul li { font-size: 1.1rem; }
+            img { max-width: 100%; height: auto; }
+            .slide-content { width: 90%; }
+            #slide1 .slide-content { flex-direction: column; }
+            .text-container { max-width: 100%; text-align: center; }
+            .edu-skills-container { flex-direction: column; }
+            .education, .skills { width: 100%; margin-bottom: 1rem; }
+            .next-link { font-size: 1rem; }
+            .arrow { font-size: 1.2rem; }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.8rem; }
+            h3 { font-size: 1.3rem; }
+            p, ul li { font-size: 1rem; }
+            .slide { padding: 1rem; }
+            img { max-width: 80%; }
+        }
+    </style>
 </head>
 <body>
-  <div class="wrapper">
-    <!-- Slide 1: Header & Personal Profile -->
-    <section class="slide" id="slide1">
-      <div class="slide-content">
-        <img src="dev.png" alt="dev" class="animate-item from-bottom delay3 " id="s1-img">
-        <div class="text-container">
-          <h1 class="animate-item from-top-large delay1" id="s1-h1">dev waghela</h1>
-          <p class="animate-item from-left delay2" id="s1-p1">currently 18</p>
-          <p class="animate-item from-right delay4" id="s1-p2">currenlty in living in mumbai</p>
-          <p>currently working on: a billboard oriented business</p>
-        </div>
-      </div>
-      <a class="next-link" href="#slide2">Next<span class="arrow">▼</span></a>
-    </section>
+    <div class="wrapper">
+        <!-- Slide 1: About Me -->
+        <section class="slide" id="slide1">
+            <div class="slide-content">
+                <img src="dev.png" alt="Dev Waghela" class="animate-item from-bottom">
+                <div class="text-container">
+                    <h1 class="animate-item from-top">-dev waghela</h1>
+                    <p class="animate-item from-left">-i can get the job done</p>
+                    <p class="animate-item from-right">mumbai📍</p>
+                    <p style="font-size: 0.89rem;" class="animate-item from-bottom">turning 18 soon, being from a business family, ive been involved in many endevours and challenges</p> 
+                    <p style="font-size: 0.89rem;" class="animate-item from top">an entrepreneur and passionate about making money and building sustainable businesses, tired with 3 biz now </p>
+                    <p style="font-size: 0.89rem;" class="animate-item from left"><a href="big-ones.html">check it out here</a> exceptionally creative and a genuis marketer, you wanna market cocaine? i can get the job done. </P>
+                    <p style="font-size: 0.89rem;" class="animate-item from right">self improvement is my hobby</p>
+                    <P style="font-size: 0.89rem;" class="animate-item from bottom" >hugely inspired by people like: nicolo machiavelli, neitchez, steve jobs, jim rohn, napolean hill, andrew cargenie, henry ford and more</P>
+                </div>
+            </div>
+            <a class="next-link" href="#slide2">Next<span class="arrow">▼</span></a>
+        </section>
 
-    <!-- Slide 2: Education, Skills & Projects -->
-    <section class="slide" id="slide2">
-      <div class="slide-content">
-        <h2 class="animate-item from-top delay1" id="s2-h2">EDUCATION & SKILLS</h2>
-        <div class="edu-skills-container">
-          <div class="education animate-item from-left delay2">
-            <h3>EDUCATION</h3>
-            <p>Highschool graduate</p>
-            <p>Passionate about making money and activities like business, living life to the fullest, growing in each way possible</p>
-            <p>i read books, mostly non-fictions and philosophy</p>
-            <p>currently building a personal brand <a href="https://instagram.com/forbiddenelon">forbiddenelon on instagram</a> </p>
-          </div>
-          <div class="skills animate-item from-right delay3">
-            <h3>SKILLS</h3>
-            <ul>
-              <li>Using Ai to its fullest</li>
-              <li>marketing</li>
-              <li>automation and articulation</li>
-              <li>research and analysis</li>
-              <li>value investing</li>
-              <li>basically, I can get the work done</li>
-              <li>this website? fullly designed and all the nasty satire and creative part? done by me, coding part, 95% with chat gpt and grok like ai tools</li>
-              <li>so yeah, I can basically get the work done</li>
+        <!-- Slide 2: Achievements -->
+        <section class="slide" id="slide2">
+            <div class="slide-content">
+                <h2 class="animate-item from-top">bit more about me</h2>
+                <div class="edu-skills-container">
+                    <div class="education animate-item from-left">
+                        <h3>-here you go</h3>
+                        <p>highschool graduate</p>
+                        <p>non-fiction reader</p>
+                        <p>trying to create a personal brand in 2025</p>
+                        <p>self-learner, and a polymath, finding traction is easy</p>
+                        <P>languages i can speak/write: english, french (a2 low), german(a2 high)</P>
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+            <a class="next-link" href="#slide3">Next<span class="arrow">▼</span></a>
+        </section>
 
-            </ul>
-          </div>
-        </div>
-        <h2 class="animate-item from-top delay4">SELECTED PROJECTS</h2>
-        <div class="projects-grid">
-          <div class="project-card animate-item from-bottom delay5">
-            <img src="https://via.placeholder.com/150x150.png?text=Project+1" alt="Project 1">
-            <p>not done</p>
-          </div>
-          <div class="project-card animate-item from-left delay6">
-            <img src="https://via.placeholder.com/150x150.png?text=Project+2" alt="Project 2">
-            <p>not entered</p>
-          </div>
-          <div class="project-card animate-item from-right delay7">
-            <img src="https://via.placeholder.com/150x150.png?text=Project+3" alt="Project 3">
-            <p>not entered</p>
-          </div>
-        </div>
-      </div>
-      <a class="next-link" href="#slide3">Next<span class="arrow">▼</span></a>
-    </section>
+        <!-- Slide 4: Contact -->
+        <section class="slide" id="slide3">
+            <div class="slide-content">
+                <h2 class="animate-item from-top">Contact</h2>
+                <p class="animate-item from-left">Email: <a href="mailto:dev.waghela1@icloud.com">dev.waghela1@icloud.com</a></p>
+                <p class="animate-item from-right">Social (personal): <a href="https://instagram.com/dev_waghelaa">dev_waghelaa</a></p>
+                <p class="animate-item from-right">Social (personal brand): <a href="https://instagram.com/forbiddenelon">forbiddenelon</a></p>
+            </div>
+        </section>
+    </div>
 
-    <!-- Slide 3: Contact & Links -->
-    <section class="slide" id="slide3">
-      <div class="slide-content">
-        <h2 class="animate-item from-top delay1" id="s3-h2">CONTACT & LINKS</h2>
-        <p class="animate-item from-left delay2" id="s3-p1">Email: dev.waghela1@icloud.com</p>
-        <p class="animate-item from-right delay3" id="s3-p2">Social: <a href="https://instagram.com/dev_waghelaa">dev_waghelaa</a></p>
-        <p class="animate-item from-bottom delay4" id="s3-p3"> <a href="index.html">go to home page</a></p>
-      </div>
-    </section>
-  </div>
+    <script>
+        // Intersection Observer for Animations
+        const animItems = document.querySelectorAll('.animate-item');
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.2
+        };
 
-  <script>
-    const animItems = document.querySelectorAll('.animate-item');
-    const observerOptions = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.2
-    };
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.animationPlayState = 'running';
-          observer.unobserve(entry.target);
-        }
-      });
-    }, observerOptions);
-    animItems.forEach(item => observer.observe(item));
-  </script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        animItems.forEach(item => observer.observe(item));
+
+        // Contact Form Submission (Demo Alert)
+        document.querySelector('.contact-form').addEventListener('submit', e => {
+            e.preventDefault();
+            alert('Thank you for your message! (This is a demo)');
+            e.target.reset();
+        });
+    </script>
 </body>
 </html>

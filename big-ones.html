@@ -2,323 +2,570 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dev Waghela - Achievements</title>
+  <title>ye sab ukhada hai maine</title>
   <style>
-    :root {
-      --star-color: #1a1a1a;
-      --star-hover-color: #0071e3;
-      --background-color: #f8f8f0;
-      --text-color: #333;
-      --modal-bg: rgba(255, 255, 255, 0.9);
-    }
+  
+@font-face {
+  font-family: 'MinecraftChat';
+  src: url('https://example.com/Minecraftia.ttf') format('truetype');
+}
 
-    body, html {
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'MinecraftChat', monospace;
+  background-color: #f8f8f8; /* Off-white background */
+  color: #333;
+  overflow-x: hidden;
+}
+
+.section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  border-bottom: 1px solid #ddd;
+  overflow: hidden;
+}
+
+/* Flex container to split text and image side-by-side */
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+  max-width: 1000px;
+  gap: 2rem;
+  z-index: 2;
+}
+
+.text, .image-container {
+  flex: 1;
+}
+
+.text {
+  font-size: 1.2rem;
+  /* Light subtle background on text */
+  background: rgba(0, 0, 0, 0.02);
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+/* Text Animation */
+.animate-item {
+  opacity: 0;
+  transition: transform 1s ease-out, opacity 1s ease-out;
+}
+
+.from-left {
+  transform: translateX(-100%);
+}
+
+.from-right {
+  transform: translateX(100%);
+}
+
+.animate-item.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Image base styling */
+.image-animate {
+  opacity: 0;
+}
+
+.image-from-left {
+  transform: translateX(-100%);
+}
+
+.image-from-right {
+  transform: translateX(100%);
+}
+
+/* Keyframes for image slide-in with playful wiggle */
+@keyframes slideInLeftWiggle {
+  0% {
+    transform: translateX(-100%) scale(0.8) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    transform: translateX(0) scale(1.1) rotate(5deg);
+    opacity: 1;
+  }
+  70% {
+    transform: translateX(0) scale(0.95) rotate(-3deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRightWiggle {
+  0% {
+    transform: translateX(100%) scale(0.8) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    transform: translateX(0) scale(1.1) rotate(-5deg);
+    opacity: 1;
+  }
+  70% {
+    transform: translateX(0) scale(0.95) rotate(3deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.image-from-left.active {
+  animation: slideInLeftWiggle 1.2s ease-out forwards;
+}
+
+.image-from-right.active {
+  animation: slideInRightWiggle 1.2s ease-out forwards;
+}
+
+/* Bubble & shape animations (subtle, barely-there details) */
+.bubble {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(220, 220, 220, 0.4);
+  animation: floatBubble 5s ease-in-out infinite;
+  z-index: 1;
+}
+
+.bubble.small { width: 25px; height: 25px; }
+.bubble.medium { width: 40px; height: 40px; }
+.bubble.large { width: 60px; height: 60px; }
+
+@keyframes floatBubble {
+  0%   { transform: translateY(0) scale(0.9); opacity: 0.8; }
+  50%  { transform: translateY(-15px) scale(1); opacity: 1; }
+  100% { transform: translateY(0) scale(0.9); opacity: 0.8; }
+}
+
+.image-container img {
+  max-width: 480px;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
+/* Media Queries for Mobile Devices */
+@media (max-width: 768px) {
+  /* Adjust font size for readability */
+  .text {
+    font-size: 1rem;
+  }
+
+  /* Stack content vertically */
+  .content {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  /* Adjust image and text container behavior */
+  .text, .image-container {
+    flex: none;
+    width: 100%;
+  }
+
+  /* Ensure images scale properly */
+  .image-container img {
+    max-width: 100%;
+  }
+
+  /* Reduce padding for better space usage */
+  .section {
+    padding: 1rem;
+  }
+
+  /* Adjust bubble sizes for smaller screens */
+  .bubble.small { width: 15px; height: 15px; }
+  .bubble.medium { width: 25px; height: 25px; }
+  .bubble.large { width: 40px; height: 40px; }
+
+  /* Adjust bubble positions to fit screen */
+  .bubble {
+    transform: scale(0.8);
+  }
+}
+
+/* Additional Media Query for Very Small Screens */
+@media (max-width: 480px) {
+  /* Further reduce font size */
+  .text {
+    font-size: 0.9rem;
+  }
+
+  /* Minimize padding */
+  .section {
+    padding: 0.5rem;
+  }
+
+  /* Further adjust bubble sizes */
+  .bubble.small { width: 10px; height: 10px; }
+  .bubble.medium { width: 20px; height: 20px; }
+  .bubble.large { width: 30px; height: 30px; }
+
+  /* Reduce animation distance for performance */
+  .from-left {
+    transform: translateX(-50%);
+  }
+  .from-right {
+    transform: translateX(50%);
+  }
+  .image-from-left {
+    transform: translateX(-50%);
+  }
+  .image-from-right {
+    transform: translateX(50%);
+  }
+}
+    /* Load your Minecraft chat font – replace the URL with your actual hosted font file */
+    @font-face {
+      font-family: 'MinecraftChat';
+      src: url('https://example.com/Minecraftia.ttf') format('truetype');
+    }
+    body {
       margin: 0;
       padding: 0;
-      width: 100%;
-      height: 100%;
+      font-family: 'MinecraftChat', monospace;
+      background-color: #f8f8f8; /* Off-white background */
+      color: #333;
+      overflow-x: hidden;
+    }
+    .section {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      border-bottom: 1px solid #ddd;
       overflow: hidden;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: var(--background-color);
+    }
+    /* Flex container to split text and image side-by-side */
+    .content {
       display: flex;
-      justify-content: center;
       align-items: center;
-    }
-
-    /* Main container that blurs when a modal is active */
-    .main-container {
-      width: 100%;
-      height: 100%;
-      display: flex;
       justify-content: center;
-      align-items: center;
-      transition: filter 0.5s ease-in-out;
-    }
-
-    .main-container.blurred {
-      filter: blur(10px);
-    }
-
-    /* Star of David SVG Styling */
-    #star-of-david {
-      width: 350px;
-      height: auto;
-      max-width: 90vw;
-      stroke-width: 1;
-      stroke-linejoin: round;
-      filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1));
-    }
-
-    .star-point, .star-center {
-      fill: var(--star-color);
-      stroke: var(--background-color); /* Creates a subtle separation effect */
-      transition: fill 0.3s ease, transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-      cursor: pointer;
-    }
-
-    .star-point:hover {
-      fill: var(--star-hover-color);
-      transform: scale(1.05);
-      transform-origin: center;
-    }
-    
-    .star-center {
-      cursor: default;
-    }
-
-    /* Achievement Modal */
-    .achievement-modal {
-      position: fixed;
-      top: 50%;
-      left: 50%;
       width: 90%;
-      max-width: 800px;
-      max-height: 90vh;
-      background: var(--modal-bg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-radius: 20px;
-      box-shadow: 0 10px 50px rgba(0,0,0,0.2);
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      
-      transform: translate(-50%, -50%) scale(0.9);
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.4s ease, transform 0.4s ease, visibility 0s 0.4s;
-      
-      padding: 2.5rem;
-      overflow-y: auto;
-      z-index: 100;
-    }
-
-    .achievement-modal.active {
-      transform: translate(-50%, -50%) scale(1);
-      opacity: 1;
-      visibility: visible;
-      transition: opacity 0.4s ease, transform 0.4s ease;
-    }
-
-    /* Close Button */
-    .close-button {
-      position: absolute;
-      top: 15px;
-      right: 20px;
-      width: 30px;
-      height: 30px;
-      background: #e0e0e0;
-      color: #555;
-      border-radius: 50%;
-      border: none;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      transition: transform 0.2s ease, background-color 0.2s ease;
-    }
-    .close-button:hover {
-        transform: scale(1.1);
-        background-color: #d0d0d0;
-    }
-
-    /* Modal Content */
-    .modal-content {
-      display: flex;
-      align-items: center;
+      max-width: 1000px;
       gap: 2rem;
+      z-index: 2;
     }
-
-    .modal-content .text {
-      flex: 1.5;
-      color: var(--text-color);
-    }
-    
-    .modal-content h2 {
-        font-size: 2.2rem;
-        margin-top: 0;
-        margin-bottom: 0.5rem;
-        color: #000;
-    }
-    
-    .modal-content p {
-        font-size: 1.1rem;
-        line-height: 1.6;
-        margin-bottom: 1rem;
-    }
-
-    .modal-content a {
-        color: var(--star-hover-color);
-        text-decoration: none;
-        font-weight: 600;
-    }
-    .modal-content a:hover {
-        text-decoration: underline;
-    }
-
-    .modal-content .image-container {
+    .text, .image-container {
       flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
     }
-
-    .modal-content img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 12px;
+    .text {
+      font-size: 1.2rem;
+      /* Light subtle background on text */
+      background: rgba(0, 0, 0, 0.02);
+      padding: 1rem;
+      border-radius: 5px;
     }
-    
-    /* Responsive Design */
-    @media (max-width: 768px) {
-        .modal-content {
-            flex-direction: column-reverse; /* Image on top on mobile */
-            text-align: center;
-        }
-        .achievement-modal {
-            padding: 2rem 1.5rem;
-        }
-        .modal-content h2 {
-            font-size: 1.8rem;
-        }
+    /* Text Animation */
+    .animate-item {
+      opacity: 0;
+      transition: transform 1s ease-out, opacity 1s ease-out;
     }
-
+    .from-left {
+      transform: translateX(-100%);
+    }
+    .from-right {
+      transform: translateX(100%);
+    }
+    .animate-item.active {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    /* Image base styling */
+    .image-animate {
+      opacity: 0;
+    }
+    .image-from-left {
+      transform: translateX(-100%);
+    }
+    .image-from-right {
+      transform: translateX(100%);
+    }
+    /* Keyframes for image slide-in with playful wiggle */
+    @keyframes slideInLeftWiggle {
+      0% {
+        transform: translateX(-100%) scale(0.8) rotate(0deg);
+        opacity: 0;
+      }
+      50% {
+        transform: translateX(0) scale(1.1) rotate(5deg);
+        opacity: 1;
+      }
+      70% {
+        transform: translateX(0) scale(0.95) rotate(-3deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateX(0) scale(1) rotate(0deg);
+        opacity: 1;
+      }
+    }
+    @keyframes slideInRightWiggle {
+      0% {
+        transform: translateX(100%) scale(0.8) rotate(0deg);
+        opacity: 0;
+      }
+      50% {
+        transform: translateX(0) scale(1.1) rotate(-5deg);
+        opacity: 1;
+      }
+      70% {
+        transform: translateX(0) scale(0.95) rotate(3deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateX(0) scale(1) rotate(0deg);
+        opacity: 1;
+      }
+    }
+    .image-from-left.active {
+      animation: slideInLeftWiggle 1.2s ease-out forwards;
+    }
+    .image-from-right.active {
+      animation: slideInRightWiggle 1.2s ease-out forwards;
+    }
+    /* Bubble & shape animations (subtle, barely-there details) */
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(220,220,220,0.4);
+      animation: floatBubble 5s ease-in-out infinite;
+      z-index: 1;
+    }
+    .bubble.small { width: 25px; height: 25px; }
+    .bubble.medium { width: 40px; height: 40px; }
+    .bubble.large { width: 60px; height: 60px; }
+    @keyframes floatBubble {
+      0%   { transform: translateY(0) scale(0.9); opacity: 0.8; }
+      50%  { transform: translateY(-15px) scale(1); opacity: 1; }
+      100% { transform: translateY(0) scale(0.9); opacity: 0.8; }
+    }
+    .image-container img {
+  max-width: 480px; /* Adjust the max-width as needed */
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
   </style>
 </head>
 <body>
 
-  <div class="main-container">
-    <svg id="star-of-david" viewBox="0 0 100 100">
-      <polygon class="star-center" points="50,34.64 67.32,42.32 67.32,57.68 50,65.36 32.68,57.68 32.68,42.32"/>
-      
-      <polygon class="star-point" data-modal="modal-1" points="50,0 67.32,42.32 32.68,42.32" />
-      <polygon class="star-point" data-modal="modal-2" points="75,17.32 67.32,42.32 84.64,50" /> <polygon class="star-point" data-modal="modal-3" points="75,82.68 84.64,50 67.32,57.68" /> <polygon class="star-point" data-modal="modal-4" points="50,100 32.68,57.68 67.32,57.68" /> <polygon class="star-point" data-modal="modal-5" points="25,82.68 32.68,57.68 15.36,50" /> <polygon class="star-point" data-modal="modal-6" points="25,17.32 15.36,50 32.68,42.32" /> </svg>
-  </div>
-
-
-  <div id="modal-1" class="achievement-modal">
-    <button class="close-button">&times;</button>
-    <div class="modal-content">
-      <div class="text">
-        <h2>WealthWire</h2>
-        <p>Created 'WealthWire', a platform for investors and traders to get curated, no-clutter stock market news via newsletters.</p>
-        <p><a href="https://wealthwire.me" target="_blank" rel="noopener noreferrer">Visit wealthwire.me</a></p>
-      </div>
-      <div class="image-container"><img src="wealthwire.png" alt="WealthWire"></div>
+<!-- Section 1: Text left, image right -->
+<section class="section">
+  <div class="content">
+    <div class="text animate-item from-left">
+      <p>Created 'WealthWire or WealthWire.me' (temporarily abandoned)</p>
+      <p>Helping investors and retail traders, get perfecly curated news about the stock market, in terms of newsletters, after the user subscribes to it</p>
+      <p>Checkout the actual biz on the website itself👇🏻👇🏻</p>
+      <a href="https://wealthwire.me" target="_blank" rel="noopener noreferrer"> wealthwire.me</a>
+    </div>
+    <div class="image-container">
+      <img class="image-animate image-from-right" src="wealthwire.png" alt="Beatles 1">
     </div>
   </div>
-  
-  <div id="modal-2" class="achievement-modal">
-    <button class="close-button">&times;</button>
-    <div class="modal-content">
-      <div class="text">
-        <h2>Stock Market Success</h2>
-        <p>Engaged in Indian stock markets since age 15. Generated <strong>200%+ returns</strong> in personal trading and around <strong>27% in value investing</strong>.</p>
-      </div>
-      <div class="image-container"><img src="nifty.png" alt="NIFTY 50 Graph"></div>
+  <div class="bubble small" style="top:10%; left:20%;"></div>
+  <div class="bubble medium" style="bottom:15%; right:25%;"></div>
+</section>
+
+<!-- Section 2: Text right, image left -->
+<section class="section">
+  <div class="content">
+    <div class="image-container">
+      <img class="image-animate image-from-left" src="wealthwire.png" alt="Beatles 2">
+    </div>
+    <div class="text animate-item from-right">
+      <p>'Designed' and 'Developed' the web-pages of </p>
+      <a href="https://wealthwire.me" target="_blank" rel="noopener noreferrer"> wealthwire.me</a>
     </div>
   </div>
-  
-  <div id="modal-3" class="achievement-modal">
-    <button class="close-button">&times;</button>
-    <div class="modal-content">
-      <div class="text">
-        <h2>Babylonian Water Systems</h2>
-        <p>Architected a startup concept to revolutionize water management for SMEs using IoT and ML, detailed in a comprehensive project plan.</p>
-        <p><a href="babylonian water systems.pdf" target="_blank">View the Full Project PDF</a></p>
-      </div>
-      <div class="image-container"><img src="https://via.placeholder.com/400x300.png?text=Water+Systems" alt="Babylonian Water Systems"></div>
+  <div class="bubble large" style="top:20%; right:10%;"></div>
+  <div class="bubble small" style="bottom:20%; left:30%;"></div>
+</section>
+
+<!-- Section 3: Text left, image right -->
+<section class="section">
+  <div class="content">
+    <div class="text animate-item from-left">
+      <p>Actively engaged in the indian stock markets, and a handful experience in the stock market of 2+ years, i.e from the age of 15
+      </p>
+      <p>With generated 200%+ returns on the personal trading portfolio and aorund 27% in value investing</p>
+    </div>
+    <div class="image-container">
+      <img class="image-animate image-from-right" src="nifty.png" alt="Beatles 3">
     </div>
   </div>
-  
-  <div id="modal-4" class="achievement-modal">
-    <button class="close-button">&times;</button>
-    <div class="modal-content">
-      <div class="text">
-        <h2>Crypto Software "Prospector"</h2>
-        <p>Built a crypto software to find and analyze newly launched coins using an in-house "green-flag system", complete with an automated trade engine.</p>
-      </div>
-      <div class="image-container"><img src="https://via.placeholder.com/400x300.png?text=Crypto+Prospector" alt="Crypto Prospector"></div>
+  <div class="bubble medium" style="top:15%; left:40%;"></div>
+  <div class="bubble small" style="bottom:10%; right:20%;"></div>
+</section>
+
+<!-- Section 4: Text right, image left -->
+<section class="section">
+  <div class="content">
+    <div class="image-container">
+      <img class="image-animate image-from-left" src="https://via.placeholder.com/300" alt="Beatles 4">
+    </div>
+    <div class="text animate-item from-right">
+      <p>Indetermininate in writing and articulating marketing campaigns and coming up with some towers smashing ideas when it comes to ANY sort of marketing</p>
+      <p>Neuromarketing? 👍</p>
+      <p>Digital marketing? 👍</p>
+      <p>Classic-desi markeitng? 👍</p>
+      <a href="marketing.html">Click here to read, each, one.</a>
     </div>
   </div>
-  
-  <div id="modal-5" class="achievement-modal">
-    <button class="close-button">&times;</button>
-    <div class="modal-content">
-      <div class="text">
-        <h2>Organic Marketing Campaign</h2>
-        <p>Executed an organic marketing strategy for WealthWire, deploying over 2,000 tweets and achieving more than 30,000 impressions.</p>
-        <p><a href="https://x.com/wealthwire24" target="_blank" rel="noopener noreferrer">See the Profile on X.com</a></p>
-      </div>
-      <div class="image-container"><img src="ealthwire.png" alt="WealthWire X.com Profile"></div>
+  <div class="bubble large" style="top:30%; right:30%;"></div>
+  <div class="bubble small" style="bottom:25%; left:15%;"></div>
+</section>
+
+<!-- Section 5: Text left, image right -->
+<section class="section">
+  <div class="content">
+    <div class="text animate-item from-left">
+      <p>Managed to volunteer as a role of community co-ordinator @16 in a startup called 'StartUpParty'</p>
+      <P>Left it after 2 weeks of joining, reason: they were a non-profit</P>
+      <p>But, the experience was great, and i got to learn a lot about how to manage a community</p>
+    </div>
+    <div class="image-container">
+      <img class="image-animate image-from-right" src="startupparty.png" alt="Beatles 5">
     </div>
   </div>
-  
-  <div id="modal-6" class="achievement-modal">
-    <button class="close-button">&times;</button>
-    <div class="modal-content">
-      <div class="text">
-        <h2>Startup Community Volunteer</h2>
-        <p>Volunteered as a Community Co-ordinator at 'StartUpParty' at age 16, gaining valuable experience in community management and engagement.</p>
-      </div>
-      <div class="image-container"><img src="startupparty.png" alt="StartUpParty Logo"></div>
+  <div class="bubble medium" style="top:10%; left:50%;"></div>
+  <div class="bubble small" style="bottom:20%; right:35%;"></div>
+</section>
+
+<!-- Section 6: Text right, image left -->
+<section class="section">
+  <div class="content">
+    <div class="image-container">
+      <img class="image-animate image-from-left" src="ealthwire.png" alt="Beatles 6">
+    </div>
+    <div class="text animate-item from-right">
+      <p>Tweeted out 2000+ tweets as a part of organic marketing for Wealthwire.me</p>
+      <p>With over 30,000+ views total, and just ONE lead</p>
+      <p>Yes i own my loses</p>
+      <a href="https://x.com/wealthwire24">X.com/wealthwire24</a>
     </div>
   </div>
+  <div class="bubble large" style="top:25%; left:20%;"></div>
+  <div class="bubble small" style="bottom:15%; right:40%;"></div>
+</section>
 
+<!-- Section 7: Text left, image right -->
+<section class="section">
+  <div class="content">
+    <div class="text animate-item from-left">
+      <p>Using AI to its maximum power</p>
+      <p>NO SKILL? i learn about it, how much is necessary</p>
+      <p>boom! your work is done!</p>
+      <p>or even mine? But the work gets done</p>
+      <p>i would get your work done even if I were an employee in Pentagon during 9/11 hits baby</p>
+    </div>
+    <div class="image-container">
+      <img class="image-animate image-from-right" src="https://via.placeholder.com/300" alt="Beatles 7">
+    </div>
+  </div>
+  <div class="bubble medium" style="top:20%; right:20%;"></div>
+  <div class="bubble small" style="bottom:10%; left:10%;"></div>
+</section>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const starPoints = document.querySelectorAll('.star-point');
-      const mainContainer = document.querySelector('.main-container');
-      const modals = document.querySelectorAll('.achievement-modal');
-      const closeButtons = document.querySelectorAll('.close-button');
+<!-- Section 8: Text right, image left -->
+<section class="section">
+  <div class="content">
+    <div class="image-container">
+      <img class="image-animate image-from-left" src="https://via.placeholder.com/300" alt="Beatles 8">
+    </div>
+    <div class="text animate-item from-right">
+      <p>I have built a crypto software "prospector"</p>
+      <p>its main job is to find all the newly launched crypto coins</p>
+      <p>then sort some 1% crypto from the thousands found, based on the in-house "green-flag system"</p>
+      <p>green flag system basically filters the actual worthy coin</p>
+      <p>all those coins are then audited every 60 minutes, and those who maintain their worth, are then sent to the "trade engine"</p>
+      <p>trade engine, basically trades those coins, and exits in the shortest time possible</p>
+    </div>
+  </div>
+  <div class="bubble large" style="top:15%; left:30%;"></div>
+  <div class="bubble small" style="bottom:20%; right:15%;"></div>
+</section>
 
-      let activeModal = null;
+<!-- Section 9: Text left, image right -->
+<section class="section">
+  <div class="content">
+    <div class="text animate-item from-left">
+      <p>(currently running) personalized AI Automations & Internet presence for Realtors in the USA (preparing for more countries)</p>
+      <p>sales, marketing, production & development is handled by me</p>
+      <p>check it out here</p>
+      <a href="https://wealthwire.me" target="_blank" rel="noopener noreferrer"> wealthwire.me</a>
+    </div>
+    <div class="image-container">
+      <img class="image-animate image-from-right" src="https://via.placeholder.com/300" alt="Beatles 9">
+    </div>
+  </div>
+  <div class="bubble medium" style="top:10%; right:50%;"></div>
+  <div class="bubble small" style="bottom:15%; left:40%;"></div>
+</section>
 
-      const openModal = (modal) => {
-        if (activeModal) return;
-        activeModal = modal;
-        mainContainer.classList.add('blurred');
-        modal.classList.add('active');
-      };
+<!-- Section 10: Text right, image left -->
+<section class="section">
+  <div class="content">
+    <div class="image-container">
+      <img class="image-animate image-from-left" src="https://via.placeholder.com/300" alt="Beatles 10">
+    </div>
+    <div class="text animate-item from-right">
+      <p>Curated, Built and Architected my own "Babylonian Water Systems"</p>
+     <p>click to view the whole project</p>
+      <p>
+  <a href="babylonian water systems.pdf" target="_blank">Babylonian Water Systems</a>
+</p>
+    </div>
+  </div>
+  <div class="bubble large" style="top:20%; left:40%;"></div>
+  <div class="bubble small" style="bottom:10%; right:30%;"></div>
+</section>
 
-      const closeModal = () => {
-        if (!activeModal) return;
-        mainContainer.classList.remove('blurred');
-        activeModal.classList.remove('active');
-        activeModal = null;
-      };
+<!-- Section 11: Text left, image right -->
+<section class="section">
+  <div class="content">
+    <div class="text animate-item from-left">
+      <p>The Beatles' legacy is forever etched in music history.</p>
+    </div>
+    <div class="image-container">
+      <img class="image-animate image-from-right" src="https://via.placeholder.com/300" alt="Beatles 11">
+    </div>
+  </div>
+  <div class="bubble medium" style="top:15%; left:25%;"></div>
+  <div class="bubble small" style="bottom:20%; right:20%;"></div>
+</section>
 
-      starPoints.forEach(point => {
-        point.addEventListener('click', () => {
-          const modalId = point.getAttribute('data-modal');
-          const modal = document.getElementById(modalId);
-          if (modal) {
-            openModal(modal);
-          }
-        });
-      });
-      
-      closeButtons.forEach(button => {
-        button.addEventListener('click', closeModal);
-      });
-      
-      // Close with the 'Escape' key
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-          closeModal();
-        }
-      });
-      
-      // Optional: Close when clicking outside the modal
-      document.addEventListener('click', (e) => {
-          if (activeModal && !activeModal.contains(e.target) && !e.target.closest('.star-point')) {
-              closeModal();
-          }
-      });
+<script>
+  // Intersection Observer to trigger animations when elements are visible
+  const animatedElements = document.querySelectorAll('.animate-item, .image-animate');
+  const observerOptions = { threshold: 0.3 };
 
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+        obs.unobserve(entry.target);
+      }
     });
-  </script>
+  }, observerOptions);
+
+  animatedElements.forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
